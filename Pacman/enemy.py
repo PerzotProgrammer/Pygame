@@ -1,15 +1,16 @@
 # Importy bibliotek
 import pygame
+from random import randint
 
 # Importy plików lokalnych
 import globals
 
 
-class Player:
-    def __init__(self, posX, posY):
+class Enemy:
+    def __init__(self, color):
         pygame.init()
-        self.posX = posX
-        self.posY = posY
+        self.posX = randint(0, globals.WINDOW_X - 25)
+        self.posY = randint(0, globals.WINDOW_Y - 25)
         self.speed = 5
         self.debugSize = 25  # zmienna tymczasowa, dopóki nie ma tekstury
         self.time = 0
@@ -17,7 +18,7 @@ class Player:
         self.surf = pygame.Surface((self.debugSize, self.debugSize))
         self.rect = self.surf.get_rect(topleft=(self.posX, self.posY))
         self.rectSize = self.rect.size
-        self.surf.fill(globals.COLOR_WHITE)
+        self.surf.fill(color)
 
     def drawAndMove(self, screen):
         screen.blit(self.surf, (self.posX, self.posY))
@@ -32,16 +33,4 @@ class Player:
         return False
 
     def movementControls(self):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_w] and self.posY > 0:
-            self.posY -= self.speed
-            self.rect.y -= self.speed
-        if keys[pygame.K_s] and self.posY < globals.WINDOW_Y - self.rectSize[1]:
-            self.posY += self.speed
-            self.rect.y += self.speed
-        if keys[pygame.K_a] and self.posX > 0:
-            self.posX -= self.speed
-            self.rect.x -= self.speed
-        if keys[pygame.K_d] and self.posX < globals.WINDOW_X - self.rectSize[0]:
-            self.posX += self.speed
-            self.rect.x += self.speed
+        pass
