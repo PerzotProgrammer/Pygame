@@ -1,2 +1,6 @@
 temp.py
 tempCodeRunnerFile.py
+.idea
+.vs
+.vscode
+*.user
