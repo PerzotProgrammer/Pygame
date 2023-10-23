@@ -1,6 +1,7 @@
 # Importy bibliotek
 import pygame
 from sys import exit
+from random import randint
 # from os import path
 
 # Importy plików lokalnych
@@ -19,25 +20,35 @@ def exitListener():
 class Game:
     def __init__(self):
         pygame.init()
+        self.Colors = [globals.COLOR_BLACK, globals.COLOR_WHITE, globals.COLOR_RED, globals.COLOR_GREEN,
+                       globals.COLOR_BLUE]
         self.clock = pygame.time.Clock()
         self.background = pygame.Surface((globals.WINDOW_X, globals.WINDOW_Y))
-        self.background.fill(globals.COLOR_BLACK)
+        self.background.fill(self.Colors[0])
         self.screen = pygame.display.set_mode((globals.WINDOW_X, globals.WINDOW_Y))
         pygame.display.set_caption("Pacman")
         # pygame.display.set_icon() # Przyda się potem
 
         # Obiekty gry
-        self.playerObject = player.Player(100, 100)
-        self.enemy1 = enemy.Enemy(globals.COLOR_RED)
-        self.enemy2 = enemy.Enemy(globals.COLOR_GREEN)
-        self.enemy3 = enemy.Enemy(globals.COLOR_BLUE)
+        self.playerObject = player.Player(randint(100, globals.WINDOW_X - 100), randint(100, globals.WINDOW_Y - 100))
+        self.Enemies = []
+        self.EnemiesColliders = []
+        self.createEnemies(10)
 
     def drawGame(self):
         self.screen.blit(self.background, (0, 0))
         self.playerObject.drawAndMove(self.screen)
-        self.enemy1.drawAndMove(self.screen)
-        self.enemy2.drawAndMove(self.screen)
-        self.enemy3.drawAndMove(self.screen)
+        self.drawEnemies()
+
+    def createEnemies(self, numOfEnemies):
+        for i in range(numOfEnemies):
+            color = randint(2, 4)
+            self.Enemies.append(enemy.Enemy(self.Colors[color]))
+            self.EnemiesColliders.append(self.Enemies[i].rect)
+
+    def drawEnemies(self):
+        for i in range(len(self.Enemies)):
+            self.Enemies[i].drawAndMove(self.screen, self.playerObject.rect)
 
     def mainLoop(self):
         while True:
