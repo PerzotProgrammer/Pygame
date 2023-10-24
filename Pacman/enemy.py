@@ -11,6 +11,7 @@ class Enemy:
         pygame.init()
         self.posX = randint(0, globals.WINDOW_X - 25)
         self.posY = randint(0, globals.WINDOW_Y - 25)
+        self.hp = 10
         self.speed = 2
         self.direction = randint(0, 3)
         self.debugSize = 25  # zmienna tymczasowa, dopóki nie ma tekstury
@@ -22,11 +23,11 @@ class Enemy:
         self.rectSize = self.rect.size
         self.surf.fill(color)
 
-    def drawAndMove(self, screen, playerRect):
+    def drawAndMove(self, screen, player):
         screen.blit(self.surf, (self.posX, self.posY))
         if self.deltaTime():
             self.movementControls()
-            self.collisionDetection(playerRect)
+            self.collisionDetection(player)
             self.timeToChangeDirection += 1
 
     def deltaTime(self):
@@ -53,6 +54,12 @@ class Enemy:
             self.posX += self.speed
             self.rect.x += self.speed
 
-    def collisionDetection(self, playerRect):
-        if self.rect.colliderect(playerRect):
-            print("COLLIDED")
+    def collisionDetection(self, player):
+        if self.rect.colliderect(player.rect):
+            player.hp -= 1
+            self.hp -= 1
+
+    def checkIfDead(self) -> bool:
+        if self.hp <= 0:
+            return True
+        return False

@@ -23,6 +23,7 @@ class Game:
         self.Colors = [globals.COLOR_BLACK, globals.COLOR_WHITE, globals.COLOR_RED, globals.COLOR_GREEN,
                        globals.COLOR_BLUE]
         self.clock = pygame.time.Clock()
+        self.font = pygame.font.SysFont("Arial", 50)
         self.background = pygame.Surface((globals.WINDOW_X, globals.WINDOW_Y))
         self.background.fill(self.Colors[0])
         self.screen = pygame.display.set_mode((globals.WINDOW_X, globals.WINDOW_Y))
@@ -39,6 +40,7 @@ class Game:
         self.screen.blit(self.background, (0, 0))
         self.playerObject.drawAndMove(self.screen)
         self.drawEnemies()
+        self.drawText()
 
     def createEnemies(self, numOfEnemies):
         for i in range(numOfEnemies):
@@ -47,8 +49,15 @@ class Game:
             self.EnemiesColliders.append(self.Enemies[i].rect)
 
     def drawEnemies(self):
-        for i in range(len(self.Enemies)):
-            self.Enemies[i].drawAndMove(self.screen, self.playerObject.rect)
+        for enemyObject in self.Enemies:
+            if enemyObject.checkIfDead():
+                del enemyObject
+            else:
+                enemyObject.drawAndMove(self.screen, self.playerObject)
+
+    def drawText(self):
+        hpText = self.font.render(f"HP: {self.playerObject.hp}", True, globals.COLOR_WHITE, globals.COLOR_RED)
+        self.screen.blit(hpText, (0, globals.WINDOW_Y - 50))
 
     def mainLoop(self):
         while True:

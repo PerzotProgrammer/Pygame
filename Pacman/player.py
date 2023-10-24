@@ -10,6 +10,7 @@ class Player:
         pygame.init()
         self.posX = posX
         self.posY = posY
+        self.hp = 100
         self.speed = 2
         self.debugSize = 25  # zmienna tymczasowa, dopóki nie ma tekstury
         self.time = 0
