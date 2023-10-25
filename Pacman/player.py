@@ -11,6 +11,7 @@ class Player:
         self.posX = posX
         self.posY = posY
         self.hp = 100
+        self.direction = 4
         self.speed = 2
         self.debugSize = 25  # zmienna tymczasowa, dopóki nie ma tekstury
         self.time = 0
@@ -34,15 +35,25 @@ class Player:
 
     def movementControls(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_w] and self.posY > 0:
+
+        if keys[pygame.K_w]:
+            self.direction = 0
+        if keys[pygame.K_s]:
+            self.direction = 1
+        if keys[pygame.K_a]:
+            self.direction = 2
+        if keys[pygame.K_d]:
+            self.direction = 3
+
+        if self.direction == 0 and self.posY > 0:
             self.posY -= self.speed
             self.rect.y -= self.speed
-        if keys[pygame.K_s] and self.posY < globals.WINDOW_Y - self.rectSize[1]:
+        if self.direction == 1 and self.posY < globals.WINDOW_Y - self.rectSize[1]:
             self.posY += self.speed
             self.rect.y += self.speed
-        if keys[pygame.K_a] and self.posX > 0:
+        if self.direction == 2 and self.posX > 0:
             self.posX -= self.speed
             self.rect.x -= self.speed
-        if keys[pygame.K_d] and self.posX < globals.WINDOW_X - self.rectSize[0]:
+        if self.direction == 3 and self.posX < globals.WINDOW_X - self.rectSize[0]:
             self.posX += self.speed
             self.rect.x += self.speed

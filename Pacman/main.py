@@ -1,6 +1,5 @@
 # Importy bibliotek
 import pygame
-from sys import exit
 from random import randint
 # from os import path
 
@@ -8,13 +7,6 @@ from random import randint
 import globals
 import player
 import enemy
-
-
-def exitListener():
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            exit()
 
 
 class Game:
@@ -61,7 +53,7 @@ class Game:
 
     def mainLoop(self):
         while True:
-            exitListener()
+            globals.exitListener()
             self.drawGame()
             pygame.display.update()
             self.clock.tick(60)
