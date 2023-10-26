@@ -23,11 +23,12 @@ class Enemy:
         self.rectSize = self.rect.size
         self.surf.fill(color)
 
-    def drawAndMove(self, screen, player):
+    def drawAndMove(self, screen, player, mapObj):
         screen.blit(self.surf, (self.posX, self.posY))
         if self.deltaTime():
             self.movementControls()
             self.collisionDetection(player)
+            # self.collisionWithMapDetection(mapObj)  # Na razie jest to zasobożerne
             self.timeToChangeDirection += 1
 
     def deltaTime(self):
@@ -58,6 +59,12 @@ class Enemy:
         if self.rect.colliderect(player.rect):
             player.hp -= 1
             self.hp -= 1
+
+    def collisionWithMapDetection(self, mapObj):
+        for i in range(len(mapObj.colliders)):
+            if mapObj.colliders[i].colliderect(self.rect):
+                # print("Collision of bot")
+                pass  # Work in progress
 
     def checkIfDead(self) -> bool:
         if self.hp <= 0:

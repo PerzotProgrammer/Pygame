@@ -19,12 +19,13 @@ class Player:
         self.surf = pygame.Surface((self.debugSize, self.debugSize))
         self.rect = self.surf.get_rect(topleft=(self.posX, self.posY))
         self.rectSize = self.rect.size
-        self.surf.fill(globals.COLOR_WHITE)
+        self.surf.fill(globals.COLOR_YELLOW)
 
-    def drawAndMove(self, screen):
+    def drawAndMove(self, screen, mapObj):
         screen.blit(self.surf, (self.posX, self.posY))
         if self.deltaTime():
             self.movementControls()
+            self.collisionWithMapDetection(mapObj)
 
     def deltaTime(self):
         ticks = pygame.time.get_ticks()
@@ -57,3 +58,9 @@ class Player:
         if self.direction == 3 and self.posX < globals.WINDOW_X - self.rectSize[0]:
             self.posX += self.speed
             self.rect.x += self.speed
+
+    def collisionWithMapDetection(self, mapObj):
+        for i in range(len(mapObj.colliders)):
+            if mapObj.colliders[i].colliderect(self.rect):
+                # print("Collision")
+                pass  # Work in progress
