@@ -1,7 +1,6 @@
 import pygame
 from sys import exit
 
-import map
 
 WINDOW_X = 800
 WINDOW_Y = 800
