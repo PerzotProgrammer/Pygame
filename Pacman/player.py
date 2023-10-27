@@ -24,8 +24,8 @@ class Player:
     def drawAndMove(self, screen, mapObj):
         screen.blit(self.surf, (self.posX, self.posY))
         if self.deltaTime():
-            self.movementControls()
             self.collisionWithMapDetection(mapObj)
+            self.movementControls()
 
     def deltaTime(self):
         ticks = pygame.time.get_ticks()
@@ -46,21 +46,31 @@ class Player:
         if keys[pygame.K_d]:
             self.direction = 3
 
-        if self.direction == 0 and self.posY > 0:
+        if self.direction == 0:
             self.posY -= self.speed
             self.rect.y -= self.speed
-        if self.direction == 1 and self.posY < globals.WINDOW_Y - self.rectSize[1]:
+        if self.direction == 1:
             self.posY += self.speed
             self.rect.y += self.speed
-        if self.direction == 2 and self.posX > 0:
+        if self.direction == 2:
             self.posX -= self.speed
             self.rect.x -= self.speed
-        if self.direction == 3 and self.posX < globals.WINDOW_X - self.rectSize[0]:
+        if self.direction == 3:
             self.posX += self.speed
             self.rect.x += self.speed
 
     def collisionWithMapDetection(self, mapObj):
         for i in range(len(mapObj.colliders)):
             if mapObj.colliders[i].colliderect(self.rect):
-                # print("Collision")
-                pass  # Work in progress
+                if self.direction == 0:
+                    self.posY += self.speed
+                    self.rect.y += self.speed
+                if self.direction == 1:
+                    self.posY -= self.speed
+                    self.rect.y -= self.speed
+                if self.direction == 2:
+                    self.posX += self.speed
+                    self.rect.x += self.speed
+                if self.direction == 3:
+                    self.posX -= self.speed
+                    self.rect.x -= self.speed

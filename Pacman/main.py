@@ -24,7 +24,7 @@ class Game:
         # pygame.display.set_icon() # Przyda się potem
 
         # Obiekty gry
-        self.playerObject = player.Player(randint(100, globals.WINDOW_X - 100), randint(100, globals.WINDOW_Y - 100))
+        self.playerObject = player.Player(globals.WINDOW_X / 2, globals.WINDOW_Y / 2 + 200)
         self.mapObject = map.Map()
         self.Enemies = []
         self.createEnemies(10)
@@ -50,7 +50,7 @@ class Game:
 
     def drawText(self):
         hpText = self.font.render(f"HP: {self.playerObject.hp}", True, globals.COLOR_WHITE, globals.COLOR_RED)
-        self.screen.blit(hpText, (0, globals.WINDOW_Y - 25))
+        self.screen.blit(hpText, (0, 0))
 
     def mainLoop(self):
         while True:

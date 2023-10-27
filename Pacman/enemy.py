@@ -9,8 +9,8 @@ import globals
 class Enemy:
     def __init__(self, color):
         pygame.init()
-        self.posX = randint(0, globals.WINDOW_X - 25)
-        self.posY = randint(0, globals.WINDOW_Y - 25)
+        self.posX = globals.WINDOW_X / 2 + randint(-50, 50)
+        self.posY = globals.WINDOW_Y / 2 + randint(-50, 50)
         self.hp = 10
         self.speed = 2
         self.direction = randint(0, 3)
@@ -27,8 +27,8 @@ class Enemy:
         screen.blit(self.surf, (self.posX, self.posY))
         if self.deltaTime():
             self.movementControls()
+            self.collisionWithMapDetection(mapObj)
             self.collisionDetection(player)
-            # self.collisionWithMapDetection(mapObj)  # Na razie jest to zasobożerne
             self.timeToChangeDirection += 1
 
     def deltaTime(self):
@@ -42,16 +42,16 @@ class Enemy:
         if self.timeToChangeDirection == 100:
             self.direction = randint(0, 3)  # 0 - W, 1 - S, 2 - A, 3 - D
             self.timeToChangeDirection = 0
-        if self.direction == 0 and self.posY > 0:
+        if self.direction == 0:
             self.posY -= self.speed
             self.rect.y -= self.speed
-        if self.direction == 1 and self.posY < globals.WINDOW_Y - self.rectSize[1]:
+        if self.direction == 1:
             self.posY += self.speed
             self.rect.y += self.speed
-        if self.direction == 2 and self.posX > 0:
+        if self.direction == 2:
             self.posX -= self.speed
             self.rect.x -= self.speed
-        if self.direction == 3 and self.posX < globals.WINDOW_X - self.rectSize[0]:
+        if self.direction == 3:
             self.posX += self.speed
             self.rect.x += self.speed
 
@@ -63,8 +63,18 @@ class Enemy:
     def collisionWithMapDetection(self, mapObj):
         for i in range(len(mapObj.colliders)):
             if mapObj.colliders[i].colliderect(self.rect):
-                # print("Collision of bot")
-                pass  # Work in progress
+                if self.direction == 0:
+                    self.posY += self.speed
+                    self.rect.y += self.speed
+                if self.direction == 1:
+                    self.posY -= self.speed
+                    self.rect.y -= self.speed
+                if self.direction == 2:
+                    self.posX += self.speed
+                    self.rect.x += self.speed
+                if self.direction == 3:
+                    self.posX -= self.speed
+                    self.rect.x -= self.speed
 
     def checkIfDead(self) -> bool:
         if self.hp <= 0:
