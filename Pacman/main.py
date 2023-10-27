@@ -24,7 +24,7 @@ class Game:
         # pygame.display.set_icon() # Przyda się potem
 
         # Obiekty gry
-        self.playerObject = player.Player(globals.WINDOW_X / 2, globals.WINDOW_Y / 2 + 200)
+        self.playerObject = player.Player(globals.WINDOW_X / 2, globals.WINDOW_Y - 50)
         self.mapObject = map.Map()
         self.Enemies = []
         self.createEnemies(10)

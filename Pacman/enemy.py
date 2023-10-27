@@ -9,8 +9,8 @@ import globals
 class Enemy:
     def __init__(self, color):
         pygame.init()
-        self.posX = globals.WINDOW_X / 2 + randint(-50, 50)
-        self.posY = globals.WINDOW_Y / 2 + randint(-50, 50)
+        self.posX = globals.WINDOW_X / 2
+        self.posY = globals.WINDOW_Y / 2
         self.hp = 10
         self.speed = 2
         self.direction = randint(0, 3)
