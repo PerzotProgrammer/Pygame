@@ -1,6 +1,19 @@
-temp.py
+# WZIĘTE Z https://github.com/PerzotProgrammer/Tech19.py/blob/main/.gitignore
+# Może być nieakutalne względem pierwotnej wersji.
+
+# Pliki
+*.temp.*
+*.test.*
+*.pyc
+*.exe
 tempCodeRunnerFile.py
-.idea
+
+
+# Foldery
+__pycache__
 .vs
 .vscode
-*.user
+.idea
+Trening
+Test
+Gitignore
